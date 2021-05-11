@@ -15,15 +15,22 @@ class CategoryViewController: UIViewController,UITextFieldDelegate,UITableViewDe
     @IBOutlet weak var addButton: UIButton!
     var categoryList: Results<Category>!
     
+    let realm = try! Realm()
+    
     @IBAction func tapAddButton(_ sender: Any) {
             let instancedCategory:Category = Category()
-            instancedCategory.categoryname = self.categoryTextField.text!
+            let allCategories = realm.objects(Category.self)
+            if allCategories.count != 0 {
+                  instancedCategory.id = allCategories.max(ofProperty: "id")! + 1
+              }
+        
+            instancedCategory.category = self.categoryTextField.text!
 
             let realmInstance = try! Realm()
             try! realmInstance.write{
                 realmInstance.add(instancedCategory)
+                self.categoryTableView.reloadData()
             }
-            self.categoryTableView.reloadData()
         }
     
     override func viewDidLoad() {
@@ -33,14 +40,14 @@ class CategoryViewController: UIViewController,UITextFieldDelegate,UITableViewDe
             // UITableViewDelegate を self に設定
             self.categoryTableView.delegate = self
 
-            // ボタンの角を丸くする設定
-            addButton.layer.cornerRadius = 5
-
             let realmInstance = try! Realm()
             self.categoryList = realmInstance.objects(Category.self)
             self.categoryTableView.reloadData()
         }
-}
+    
+        
+    }
+
     
     extension CategoryViewController: UITableViewDataSource{
 
@@ -51,7 +58,7 @@ class CategoryViewController: UIViewController,UITextFieldDelegate,UITableViewDe
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let testCell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "testCell")!
             let category: Category = self.categoryList[(indexPath as NSIndexPath).row]
-            testCell.textLabel?.text = category.categoryname
+            testCell.textLabel?.text = category.category
             return testCell
         }
 
@@ -75,10 +82,10 @@ class CategoryViewController: UIViewController,UITextFieldDelegate,UITableViewDe
 
         // テーブルビューのセルをクリックしたら、アラートコントローラを表示する処理
         func showAlertController(_ indexPath: IndexPath){
-            let alertController: UIAlertController = UIAlertController(title: "\(String(indexPath.row))番目の ToDo を編集", message: categoryList[indexPath.row].categoryname, preferredStyle: .alert)
+            let alertController: UIAlertController = UIAlertController(title: "\(String(indexPath.row + 1))番目のカテゴリーを編集", message: categoryList[indexPath.row].category, preferredStyle: .alert)
             // アラートコントローラにテキストフィールドを表示 テキストフィールドには入力された情報を表示させておく処理
             alertController.addTextField(configurationHandler: {(textField: UITextField!) in
-                textField.text = self.categoryList[indexPath.row].categoryname})
+                textField.text = self.categoryList[indexPath.row].category})
             // アラートコントローラに"OK"ボタンを表示 "OK"ボタンをクリックした際に、テキストフィールドに入力した文字で更新する処理を実装
             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {
                 (action) -> Void in self.updateAlertControllerText(alertController,indexPath)
@@ -105,10 +112,14 @@ class CategoryViewController: UIViewController,UITextFieldDelegate,UITableViewDe
             // Realm に保存したデータを UIAlertController に入力されたデータで更新
             let realmInstance = try! Realm()
             try! realmInstance.write{
-                categoryList[indexPath.row].categoryname = text
+                categoryList[indexPath.row].category = text
             }
             self.categoryTableView.reloadData()
         }
+        
+        
+        
+        
     }
 
     

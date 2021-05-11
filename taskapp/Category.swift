@@ -13,7 +13,7 @@ class Category : Object {
     @objc dynamic var id = 0
     
     //カテゴリ
-    @objc dynamic var categoryname = ""
+    @objc dynamic var category = ""
     
     //idをプライマリーキーとして設定
     override static func primaryKey() -> String? {
