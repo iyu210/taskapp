@@ -26,14 +26,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if let categoryList = categoryList {
-            return categoryList.count
+            return categoryList.count + 1
         }
-        return 0
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if row == 0{
+            return "全て"
+        }
+        
         if let categoryList = categoryList {
-            return categoryList[row].category
+            return categoryList[row - 1].category
         }
         return nil
     }
@@ -44,11 +48,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //Pickeriewから選択された時のイベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let optionCategory = String(categoryList[row].category)
-        let resultArray = try! Realm().objects(Task.self).filter("category == %@", optionCategory)
+        if row == 0 {
+            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true)
+            tableView.reloadData()
+        } else{
+            let optionCategory = categoryList[row - 1]
+            let resultArray = try! Realm().objects(Task.self).filter("category == %@", optionCategory)
+            
+            taskArray = resultArray
+            tableView.reloadData()
+        }
         
-        taskArray = resultArray
-        tableView.reloadData()
         
     }
     
@@ -57,7 +67,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath)
         
         let task = taskArray[indexPath.row]
-        cell.textLabel?.text = task.title + "    カテゴリー: " + task.category
+        if task.category == nil {
+            cell.textLabel?.text = task.title + " カテゴリー: なし"
+        }else{
+            cell.textLabel?.text = task.title + "カテゴリー: \(task.category!.category)"
+        }
+       
  
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"

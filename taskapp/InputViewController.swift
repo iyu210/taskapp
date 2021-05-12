@@ -24,7 +24,7 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     var task: Task!
     var categoryList: Results<Category>!
     var category: Category!
-    var selectedCategory: String!
+    var selectedCategory: Category?
     
     
     override func viewDidLoad() {
@@ -64,7 +64,7 @@ class InputViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     //Pickeriewから選択された時のイベント
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedCategory = String(categoryList[row].category)
+        selectedCategory = categoryList[row]
         categoryLabel.text = "選択中のカテゴリー：\(categoryList[row].category)"
     }
     
