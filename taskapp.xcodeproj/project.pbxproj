@@ -37,7 +37,7 @@
 		524E7FF426428A350075BF73 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		524E7FF82642BF8F0075BF73 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		529D4473263FCAFE00418CC6 /* .. */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = ..; sourceTree = "<group>"; };
-		52D275CB2639168200722C3A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = SOURCE_ROOT; };
+		52D275CB2639168200722C3A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Task.swift; path = taskapp/Task.swift; sourceTree = SOURCE_ROOT; };
 		F9B1ED8D726580CB742E922E /* Pods_taskapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taskapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 

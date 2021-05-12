@@ -101,7 +101,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="iu0-vG-1Jp">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="iu0-vG-1Jp">
                                 <rect key="frame" x="47" y="381" width="320" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="BGY-da-F85"/>
@@ -278,6 +278,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="zGQ-xH-IKe"/>
         <segue reference="G1Z-g4-rvT"/>
     </inferredMetricsTieBreakers>
     <resources>
