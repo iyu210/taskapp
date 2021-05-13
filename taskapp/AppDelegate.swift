@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
                     // Enable or disable features based on authorization
                 }
-               
+                center.delegate = self
+        
                 return true
     }
     
